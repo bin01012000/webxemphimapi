@@ -40,6 +40,8 @@ const urlapi = `http://localhost:${process.env.PORT}`;
 app.use(cors({
     origin: '*'
 }));
+
+app.post(cors());
 app.use(express.static('upload'));
 
 app.use(express.urlencoded({ extended: true }))
