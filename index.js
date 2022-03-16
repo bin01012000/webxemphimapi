@@ -38,7 +38,7 @@ const port = process.env.PORT || 5000;
 const urlapi = `http://localhost:${process.env.PORT}`;
 
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: '*'
 }));
 app.use(express.static('upload'));
 
@@ -63,7 +63,7 @@ app.post("/", (req, res) => {
 
 
 
-app.post("/upload",cors(), (req, res) => {
+app.post("/upload", (req, res) => {
     var con = mysql.createConnection({
         host: process.env.HOST,
         user: process.env.USER,
