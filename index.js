@@ -15,7 +15,6 @@ import mysql from "mysql";
 dotenv.config();
 
 
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         let type = req.params.type;
@@ -35,14 +34,9 @@ const upload = multer({ storage }).array('file');
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors({
-    origin: '*'
-}));
-
-app.post(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 app.use(express.static('upload'));
-
-app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
@@ -65,11 +59,11 @@ app.post("/", (req, res) => {
 
 app.post("/upload", (req, res) => {
     var con = mysql.createConnection({
-        host: process.env.MYSQL_ADDON_HOST,
-        user: process.env.MYSQL_ADDON_USER,
-        password: process.env.MYSQL_ADDON_PASSWORD,
-        database: process.env.MYSQL_ADDON_DB,
-        port: process.env.MYSQL_ADDON_PORT
+        host: 'bznko0enqfgicye3wbgd-mysql.services.clever-cloud.com',
+        user: 'uooreykfeh7330qz',
+        password: 'VcOurs5ItyNMlaAXFvRf ',
+        database: 'bznko0enqfgicye3wbgd',
+        port: '3306'
     });
     upload(req, res, (err) => {
         if (err) throw err;
@@ -90,11 +84,11 @@ app.post("/upload", (req, res) => {
 
 app.post("/uploadupdate", (req, res) => {
     var con = mysql.createConnection({
-        host: process.env.MYSQL_ADDON_HOST,
-        user: process.env.MYSQL_ADDON_USER,
-        password: process.env.MYSQL_ADDON_PASSWORD,
-        database: process.env.MYSQL_ADDON_DB,
-        port: process.env.MYSQL_ADDON_PORT
+        host: 'bznko0enqfgicye3wbgd-mysql.services.clever-cloud.com',
+        user: 'uooreykfeh7330qz',
+        password: 'VcOurs5ItyNMlaAXFvRf ',
+        database: 'bznko0enqfgicye3wbgd',
+        port: '3306'
     });
 
     upload(req, res, (err) => {
