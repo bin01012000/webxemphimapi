@@ -11,7 +11,7 @@ import dotenv from "dotenv";
 import url from "url"
 import { exists } from "fs-extra";
 import mysql from "mysql";
-
+import cors_proxy from "cors-anywhere"
 
 dotenv.config();
 
@@ -117,4 +117,14 @@ app.post("/uploadupdate", (req, res) => {
 
 app.listen(port, () => {
     console.log(`Server is listenning on port: http://localhost:${port}`)
+});
+
+var host = process.env.HOST || '0.0.0.0';
+
+cors_proxy.createServer({
+    originWhitelist: [],
+    requireHeader: ['origin', 'x-requested-with'],
+    removeHeaders: ['cookie', 'cookie2']
+}).listen(port, host, function() {
+    console.log('Running CORS Anywhere on ' + host + ':' + port);
 });
