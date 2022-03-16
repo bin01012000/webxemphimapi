@@ -37,10 +37,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const urlapi = `http://localhost:${process.env.PORT}`;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors({
-    origin: '*'
+    origin: 'http://localhost:3000'
 }));
 app.use(express.static('upload'));
 
@@ -72,10 +70,10 @@ app.post("/upload", (req, res) => {
         password: process.env.PASSWORD,
         database: process.env.DB
     });
-    // upload(req, res, (err) => {
+    upload(req, res, (err) => {
     const q = url.parse(req.url, true).query;
-    // q.poster = `${urlapi}/${req.files[0].filename}`
-    // q.video = `${urlapi}/${req.files[1].filename}`
+    q.poster = `${urlapi}/${req.files[0].filename}`
+    q.video = `${urlapi}/${req.files[1].filename}`
     const values = [
         [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
     ];
@@ -88,7 +86,7 @@ app.post("/upload", (req, res) => {
     if (err) {
         return res.status(500).json(err);
     }
-    // })
+    })
 });
 
 app.post("/uploadupdate", (req, res) => {
