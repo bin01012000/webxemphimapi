@@ -115,9 +115,9 @@ app.post("/uploadupdate", (req, res) => {
 
 
 
-app.listen(port, () => {
-    console.log(`Server is listenning on port: http://localhost:${port}`)
-});
+// app.listen(port, () => {
+//     console.log(`Server is listenning on port: http://localhost:${port}`)
+// });
 
 var host = process.env.HOST || '0.0.0.0';
 
