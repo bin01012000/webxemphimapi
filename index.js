@@ -63,7 +63,7 @@ app.post("/", (req, res) => {
 
 
 
-app.post("/upload", cors(), (req, res) => {
+app.post("/upload", (req, res) => {
     var con = mysql.createConnection({
         host: process.env.HOST,
         user: process.env.USER,
