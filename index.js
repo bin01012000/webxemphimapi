@@ -11,7 +11,6 @@ import dotenv from "dotenv";
 import url from "url"
 import { exists } from "fs-extra";
 import mysql from "mysql";
-import cors_proxy from "cors-anywhere"
 
 dotenv.config();
 
@@ -35,7 +34,6 @@ const upload = multer({ storage }).array('file');
 
 const app = express();
 const port = process.env.PORT || 5000;
-const urlapi = `http://localhost:${process.env.PORT}`;
 
 app.use(cors({
     origin: '*'
@@ -67,16 +65,17 @@ app.post("/", (req, res) => {
 
 app.post("/upload", (req, res) => {
     var con = mysql.createConnection({
-        host: process.env.HOST,
-        user: process.env.USER,
-        password: process.env.PASSWORD,
-        database: process.env.DB
+        host: process.env.MYSQL_ADDON_HOST,
+        user: process.env.MYSQL_ADDON_USER,
+        password: process.env.MYSQL_ADDON_PASSWORD,
+        database: process.env.MYSQL_ADDON_DB,
+        port: process.env.MYSQL_ADDON_PORT
     });
     upload(req, res, (err) => {
         if (err) throw err;
         const q = url.parse(req.url, true).query;
-        q.poster = `${urlapi}/${req.files[0].filename}`
-        q.video = `${urlapi}/${req.files[1].filename}`
+        q.poster = `http://localhost:${port}/${req.files[0].filename}`
+        q.video = `http://localhost:${port}/${req.files[1].filename}`
         const values = [
             [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
         ];
@@ -92,19 +91,20 @@ app.post("/upload", (req, res) => {
 
 app.post("/uploadupdate", (req, res) => {
     var con = mysql.createConnection({
-        host: process.env.HOST,
-        user: process.env.USER,
-        password: process.env.PASSWORD,
-        database: process.env.DB
+        host: process.env.MYSQL_ADDON_HOST,
+        user: process.env.MYSQL_ADDON_USER,
+        password: process.env.MYSQL_ADDON_PASSWORD,
+        database: process.env.MYSQL_ADDON_DB,
+        port: process.env.MYSQL_ADDON_PORT
     });
 
     upload(req, res, (err) => {
         const q = url.parse(req.url, true).query;
         if (req.files[0] !== undefined) {
-            q.poster = `${process.env.API_URL}/${req.files[0].filename}`
+            q.poster = `http://localhost:${port}/${req.files[0].filename}`
         }
         if (req.files[1] !== undefined) {
-            q.video = `${process.env.API_URL}/${req.files[1].filename}`
+            q.video = `http://localhost:${port}/${req.files[1].filename}`
         }
         con.connect((err) => {
             con.query("update phim set tenphim = ?, thoiluong = ?, daodien = ?, dienvien = ?, tap=?,mota=?,maloai=?,poster=?,rating=?,video=? where maphim = ?", [q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video, q.maphim], (err, results) => {
