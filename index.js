@@ -36,6 +36,7 @@ const upload = multer({ storage }).array('file');
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(cors());
 app.use(express.static('upload'));
 
 app.use(express.urlencoded({ extended: false }))
@@ -65,6 +66,8 @@ app.post("/upload", (req, res) => {
 
     upload(req, res, (err) => {
         const q = url.parse(req.url, true).query;
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         q.poster = `${process.env.API_URL}/${req.files[0].filename}`
         q.video = `${process.env.API_URL}/${req.files[1].filename}`
         const values = [
