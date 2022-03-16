@@ -16,7 +16,7 @@ import mysql from "mysql";
 dotenv.config();
 
 
-app.use(cors());
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         let type = req.params.type;
@@ -36,7 +36,7 @@ const upload = multer({ storage }).array('file');
 const app = express();
 const port = process.env.PORT || 5000;
 
-
+app.use(cors());
 app.use(express.static('upload'));
 
 app.use(express.urlencoded({ extended: true }))
