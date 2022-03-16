@@ -35,6 +35,7 @@ const upload = multer({ storage }).array('file');
 
 const app = express();
 const port = process.env.PORT || 5000;
+const urlapi = `http://localhost:${process.env.PORT}`;
 
 app.use(cors());
 app.use(express.static('upload'));
@@ -67,8 +68,8 @@ app.post("/upload", (req, res) => {
     });
     upload(req, res, (err) => {
         const q = url.parse(req.url, true).query;
-        q.poster = `${process.env.API_URL}/${req.files[0].filename}`
-        q.video = `${process.env.API_URL}/${req.files[1].filename}`
+        q.poster = `${urlapi}/${req.files[0].filename}`
+        q.video = `${urlapi}/${req.files[1].filename}`
         const values = [
             [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
         ];
