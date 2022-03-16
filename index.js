@@ -71,21 +71,20 @@ app.post("/upload", (req, res) => {
         database: process.env.DB
     });
     upload(req, res, (err) => {
-    const q = url.parse(req.url, true).query;
-    q.poster = `${urlapi}/${req.files[0].filename}`
-    q.video = `${urlapi}/${req.files[1].filename}`
-    const values = [
-        [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
-    ];
-    con.connect((err) => {
-        con.query("insert into phim(maphim,tenphim,thoiluong,daodien,dienvien,tap,mota,maloai,poster,rating, video) values ?", [values], (err, results) => {
-            if (err) throw err;
-            res.send(results);
+        if (err) throw err;
+        const q = url.parse(req.url, true).query;
+        q.poster = `${urlapi}/${req.files[0].filename}`
+        q.video = `${urlapi}/${req.files[1].filename}`
+        const values = [
+            [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
+        ];
+        con.connect((err) => {
+            con.query("insert into phim(maphim,tenphim,thoiluong,daodien,dienvien,tap,mota,maloai,poster,rating, video) values ?", [values], (err, results) => {
+                if (err) throw err;
+                res.send(results);
+            });
         });
-    });
-    if (err) {
-        return res.status(500).json(err);
-    }
+
     })
 });
 
