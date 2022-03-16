@@ -74,8 +74,8 @@ app.post("/upload", (req, res) => {
     upload(req, res, (err) => {
         if (err) throw err;
         const q = url.parse(req.url, true).query;
-        q.poster = `http://localhost:${port}/${req.files[0].filename}`
-        q.video = `http://localhost:${port}/${req.files[1].filename}`
+        q.poster = `http://webxemphimapi.heroku.com/${req.files[0].filename}`
+        q.video = `http://webxemphimapi.heroku.com/${req.files[1].filename}`
         const values = [
             [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
         ];
@@ -85,7 +85,6 @@ app.post("/upload", (req, res) => {
                 res.send(results);
             });
         });
-
     })
 });
 
