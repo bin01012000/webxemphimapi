@@ -119,12 +119,12 @@ app.post("/uploadupdate", (req, res) => {
 //     console.log(`Server is listenning on port: http://localhost:${port}`)
 // });
 
-var host = process.env.HOST || '0.0.0.0';
+var host = process.env.HOST;
 
 cors_proxy.createServer({
     originWhitelist: [],
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2']
-}).listen(port, host, function() {
+}).listen(port, 'http://localhost', function() {
     console.log('Running CORS Anywhere on ' + host + ':' + port);
 });
