@@ -48,7 +48,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
-app.use("/");
+
 app.use("/", routerUser);
 app.use("/", routerFilm);
 app.use("/", routerCategory);
