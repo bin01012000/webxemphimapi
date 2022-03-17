@@ -63,8 +63,8 @@ app.post("/upload", (req, res) => {
         database: 'bznko0enqfgicye3wbgd',
         port: '3306'
     });
-    // upload(req, res, (err) => {
-    //     if (err) throw err;
+    upload(req, res, (err) => {
+        if (err) throw err;
         const q = url.parse(req.url, true).query;
         q.poster = `a`
         q.video = `a`
@@ -78,14 +78,14 @@ app.post("/upload", (req, res) => {
                 res.send(results);
             });
         });
-    // })
+    })
 });
 
 app.post("/uploadupdate", (req, res) => {
     var con = mysql.createConnection({
         host: 'bznko0enqfgicye3wbgd-mysql.services.clever-cloud.com',
         user: 'uooreykfeh7330qz',
-        password: 'VcOurs5ItyNMlaAXFvRf ',
+        password: 'VcOurs5ItyNMlaAXFvRf',
         database: 'bznko0enqfgicye3wbgd',
         port: '3306'
     });
