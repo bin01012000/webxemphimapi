@@ -63,11 +63,11 @@ app.post("/upload", (req, res) => {
         database: 'bznko0enqfgicye3wbgd',
         port: '3306'
     });
-    upload(req, res, (err) => {
-        if (err) throw err;
+    // upload(req, res, (err) => {
+    //     if (err) throw err;
         const q = url.parse(req.url, true).query;
-        q.poster = `http://webxemphimapi.heroku.com/${req.files[0].filename}`
-        q.video = `http://webxemphimapi.heroku.com/${req.files[1].filename}`
+        q.poster = `a`
+        q.video = `a`
         const values = [
             [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
         ];
@@ -77,7 +77,7 @@ app.post("/upload", (req, res) => {
                 res.send(results);
             });
         });
-    })
+    // })
 });
 
 app.post("/uploadupdate", (req, res) => {
@@ -92,10 +92,10 @@ app.post("/uploadupdate", (req, res) => {
     upload(req, res, (err) => {
         const q = url.parse(req.url, true).query;
         if (req.files[0] !== undefined) {
-            q.poster = `http://localhost:${port}/${req.files[0].filename}`
+            q.poster = `http://webxemphimapi.heroku.com/${req.files[0].filename}`
         }
         if (req.files[1] !== undefined) {
-            q.video = `http://localhost:${port}/${req.files[1].filename}`
+            q.video = `http://webxemphimapi.heroku.com/${req.files[1].filename}`
         }
         con.connect((err) => {
             con.query("update phim set tenphim = ?, thoiluong = ?, daodien = ?, dienvien = ?, tap=?,mota=?,maloai=?,poster=?,rating=?,video=? where maphim = ?", [q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video, q.maphim], (err, results) => {
