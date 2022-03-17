@@ -59,7 +59,7 @@ app.post("/upload", (req, res) => {
     var con = mysql.createConnection({
         host: 'bznko0enqfgicye3wbgd-mysql.services.clever-cloud.com',
         user: 'uooreykfeh7330qz',
-        password: 'VcOurs5ItyNMlaAXFvRf ',
+        password: 'VcOurs5ItyNMlaAXFvRf',
         database: 'bznko0enqfgicye3wbgd',
         port: '3306'
     });
