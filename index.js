@@ -66,8 +66,8 @@ app.post("/upload", (req, res) => {
     upload(req, res, (err) => {
         if (err) throw err;
         const q = url.parse(req.url, true).query;
-        q.poster = `a`
-        q.video = `a`
+        q.poster = `http://webxemphimapi.heroku.com/${req.files[0].filename}`
+        q.video = `http://webxemphimapi.heroku.com/${req.files[1].filename}`
         const values = [
             [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
         ];
@@ -99,6 +99,7 @@ app.post("/uploadupdate", (req, res) => {
             q.video = `http://webxemphimapi.heroku.com/${req.files[1].filename}`
         }
         con.connect((err) => {
+            if (err) throw err;
             con.query("update phim set tenphim = ?, thoiluong = ?, daodien = ?, dienvien = ?, tap=?,mota=?,maloai=?,poster=?,rating=?,video=? where maphim = ?", [q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video, q.maphim], (err, results) => {
                 if (err) throw err;
                 res.send(results);
