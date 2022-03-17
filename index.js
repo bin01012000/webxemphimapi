@@ -72,6 +72,7 @@ app.post("/upload", (req, res) => {
             [q.maphim, q.tenphim, q.thoiluong, q.daodien, q.dienvien, q.tap, q.mota, q.maloai, q.poster, q.rating, q.video]
         ];
         con.connect((err) => {
+            if (err) throw err;
             con.query("insert into phim(maphim,tenphim,thoiluong,daodien,dienvien,tap,mota,maloai,poster,rating, video) values ?", [values], (err, results) => {
                 if (err) throw err;
                 res.send(results);
