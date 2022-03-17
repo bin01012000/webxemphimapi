@@ -16,12 +16,8 @@ dotenv.config();
 
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        let type = req.params.type;
-        let path = `./upload`;
-        if (!exists(path)) {
-            fs.mkdirSync(path);
-        }
+    destination: (req, file, cb) => {        
+        let path = `upload`;
         cb(null, path)
     },
     filename: (req, file, cb) => {
@@ -38,6 +34,7 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('upload'));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 
