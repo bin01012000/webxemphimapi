@@ -17,8 +17,7 @@ dotenv.config();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {        
-        let path = `upload`;
-        cb(null, path)
+        cb(null, 'upload')
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + file.originalname)
