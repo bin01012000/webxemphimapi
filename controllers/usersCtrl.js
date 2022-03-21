@@ -101,18 +101,24 @@ export const createUser = (req, res) => {
         text: `Welcome to BDXL'S Movie. Have a good day !! And chill with BDXL'S Movie. Thanks !!`
     };
     con.connect((err) => {
-        con.query("insert into account(taikhoan,matkhau,email,sdt,hoten) values ?", [values], (err, results) => {
+        con.query("select * from account where taikhoan = ? or email = ?", [q.taikhoan, q.email], (err, results) => {
             if (err) throw err;
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    res.send(error);
-                } else {
-                    res.send('Email sent: ' + info.response);
-                }
-            });
-            res.redirect(process.env.URL_HOME);
-            
+            if (!results) {
+                con.query("insert into account(taikhoan,matkhau,email,sdt,hoten) values ?", [values], (err, results) => {
+                    if (err) throw err;
+                    transporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            res.send(error);
+                        } else {
+                            res.send('Email sent: ' + info.response);
+                        }
+                    });
+                    res.redirect(process.env.URL_HOME);
+
+                });
+            }
         });
+
     });
 };
 
