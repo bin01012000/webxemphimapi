@@ -103,7 +103,7 @@ export const createUser = (req, res) => {
     con.connect((err) => {
         con.query("select * from account where taikhoan = ? or email = ?", [q.taikhoan, q.email], (err, results) => {
             if (err) throw err;
-            if (!results) {
+            if (results.length === 0) {
                 con.query("insert into account(taikhoan,matkhau,email,sdt,hoten) values ?", [values], (err, results) => {
                     if (err) throw err;
                     transporter.sendMail(mailOptions, function (error, info) {
